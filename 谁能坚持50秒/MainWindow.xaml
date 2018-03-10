@@ -23,6 +23,14 @@
             <Rectangle x:Name="rightTop" Fill="#4876FF" Height="77"  Width="94" Canvas.Left="372" Canvas.Top="45"/>
             <!-- width*height = 0.17 * 0.14  top = 0.029 right = 0.2 -->
 
+            <!-- width*height = 0.111 * 0.111  left = top = 0.445 -->
+
+            <Rectangle x:Name="leftBottom" Fill="#4876FF" Height="94"  Width="47" Canvas.Left="47" Canvas.Top="321"/>
+            <!-- width*height = 0.087 * 0.17  left = 0.058 bottom = 0.058 -->
+
+            <Rectangle x:Name="rightBottom" Fill="#4876FF" Height="30"  Width="158" Canvas.Left="323" Canvas.Top="369"/>
+            <!-- width*height = 0.287 * 0.055  bottom = 0.142 right = 0 -->
+
             <Button x:Name="center"  Height="61" Background="Red" Width="61" Canvas.Left="210" Canvas.Top="228"
                     MouseLeftButtonDown="Center_MouseLeftButtonDown"
                     MouseRightButtonDown="Center_MouseLeftButtonDown"
@@ -45,14 +53,6 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <!-- width*height = 0.111 * 0.111  left = top = 0.445 -->
-
-            <Rectangle x:Name="leftBottom" Fill="#4876FF" Height="94"  Width="47" Canvas.Left="47" Canvas.Top="321"/>
-            <!-- width*height = 0.087 * 0.17  left = 0.058 bottom = 0.058 -->
-
-            <Rectangle x:Name="rightBottom" Fill="#4876FF" Height="30"  Width="158" Canvas.Left="323" Canvas.Top="369"/>
-            <!-- width*height = 0.287 * 0.055  bottom = 0.142 right = 0 -->
-
         </Canvas>
 
         <StackPanel Margin="1.8,5,4.6,4.6" Background="White" Grid.Column="1">

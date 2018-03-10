@@ -89,8 +89,10 @@ namespace 谁能坚持50秒
 
         private void MoveRectangle()
         {
-            int lTRow=0, lTCol=0;
-            int addRow = 1, addCol = 1;
+            int ltRow = 0, ltCol = 0, rtRow = 0, rtCol = 0, 
+                lbRow = 0, lbCol = 0, rbRow = 0, rbCol = 0;
+            int ltAddRow = 1, ltAddCol = 1, rtAddRow = 1, rtAddCol = 1,
+                lbAddRow = 1, lbAddCol = 1, rbAddRow = 1, rbAddCol = 1;
            
             while (true)
             {
@@ -98,37 +100,84 @@ namespace 谁能坚持50秒
                 (double)leftTop.GetValue(Canvas.LeftProperty)));
                 int ltTop = (int)leftTop.Dispatcher.Invoke(new Func<double>(() =>
                 (double)leftTop.GetValue(Canvas.TopProperty)));
-
-                int rtLeft = (int)rightTop.Dispatcher.Invoke(new Func<double>(() =>
-                (double)leftTop.GetValue(Canvas.LeftProperty)));
-                int rtTop = (int)rightTop.Dispatcher.Invoke(new Func<double>(() =>
-                (double)leftTop.GetValue(Canvas.TopProperty)));
-
-                int lbLeft = (int)leftBottom.Dispatcher.Invoke(new Func<double>(() =>
-                (double)leftTop.GetValue(Canvas.LeftProperty)));
-                int lbTop = (int)leftBottom.Dispatcher.Invoke(new Func<double>(() =>
-                (double)leftTop.GetValue(Canvas.TopProperty)));
-                int rbLeft = (int)leftTop.Dispatcher.Invoke(new Func<double>(() =>
-                (double)leftTop.GetValue(Canvas.LeftProperty)));
-                int rbTop = (int)leftTop.Dispatcher.Invoke(new Func<double>(() =>
-                (double)leftTop.GetValue(Canvas.TopProperty)));
-                Thread.Sleep(3);
-                if (ltLeft<0|| ltLeft > length - 94)
+                if (ltLeft < 0 || ltLeft > length - 94)
                 {
-                    addRow = -addRow;
+                    ltAddRow = -ltAddRow;
                 }
-                if (ltTop < 0.0 || ltTop > length - 94)
+                if (ltTop < 0 || ltTop > length - 94)
                 {
-                    addCol = -addCol;
+                    ltAddCol = -ltAddCol;
                 }
-                lTRow += addRow;
-                lTCol += addCol;
+                ltRow += ltAddRow;
+                ltCol += ltAddCol;
                 leftTop.Dispatcher.Invoke(new Action(() =>
                 {
-                    leftTop.SetValue(Canvas.TopProperty, 0.058 * length + lTCol*0.8);
-                    leftTop.SetValue(Canvas.LeftProperty, 0.058 * length + lTRow);
+                    leftTop.SetValue(Canvas.TopProperty, 0.058 * length + ltCol * 0.8);
+                    leftTop.SetValue(Canvas.LeftProperty, 0.058 * length + ltRow);
                 }));
 
+
+                int rtLeft = (int)rightTop.Dispatcher.Invoke(new Func<double>(() =>
+                (double)rightTop.GetValue(Canvas.LeftProperty)));
+                int rtTop = (int)rightTop.Dispatcher.Invoke(new Func<double>(() =>
+                (double)rightTop.GetValue(Canvas.TopProperty)));
+                if (rtLeft < 0 || rtLeft > length-94)
+                {
+                    rtAddRow = -rtAddRow;
+                }
+                if (rtTop <0 || rtTop > length -77)
+                {
+                    rtAddCol = -rtAddCol;
+                }
+                rtRow += rtAddRow;
+                rtCol += rtAddCol;
+                rightTop.Dispatcher.Invoke(new Action(() =>
+                {
+                    rightTop.SetValue(Canvas.TopProperty, 0.029 * length + rtCol * 0.8);
+                    rightTop.SetValue(Canvas.LeftProperty, 0.66 * length - rtRow);
+                }));
+
+
+                int lbLeft = (int)leftBottom.Dispatcher.Invoke(new Func<double>(() =>
+                (double)leftBottom.GetValue(Canvas.LeftProperty)));
+                int lbTop = (int)leftBottom.Dispatcher.Invoke(new Func<double>(() =>
+                (double)leftBottom.GetValue(Canvas.TopProperty)));
+                if (lbLeft < 0 || lbLeft > length-47)
+                {
+                    lbAddRow = -lbAddRow;
+                }
+                if (lbTop < 0 || lbTop > length -94)
+                {
+                    lbAddCol = -lbAddCol;
+                }
+                lbRow += lbAddRow;
+                lbCol += lbAddCol;
+                leftBottom.Dispatcher.Invoke(new Action(() =>
+                {
+                    leftBottom.SetValue(Canvas.TopProperty, 0.772 * length - lbCol * 0.8);
+                    leftBottom.SetValue(Canvas.LeftProperty, 0.058 * length + lbRow);
+                }));
+
+                int rbLeft = (int)rightBottom.Dispatcher.Invoke(new Func<double>(() =>
+                (double)rightBottom.GetValue(Canvas.LeftProperty)));
+                int rbTop = (int)leftTop.Dispatcher.Invoke(new Func<double>(() =>
+                (double)rightBottom.GetValue(Canvas.TopProperty)));
+                if (rbLeft < 0 || rbLeft > length - 158)
+                {
+                    rbAddRow = -rbAddRow;
+                }
+                if (rbTop < 0|| rbTop > length - 30)
+                {
+                    rbAddCol = -rbAddCol;
+                }
+                rbRow += rbAddRow;
+                rbCol += rbAddCol;
+                rightBottom.Dispatcher.Invoke(new Action(() =>
+                {
+                    rightBottom.SetValue(Canvas.TopProperty, 0.803 * length - rbCol * 0.8);
+                    rightBottom.SetValue(Canvas.LeftProperty, 0.713 * length + rbRow);
+                }));
+                Thread.Sleep(1);
             }
         }
 
