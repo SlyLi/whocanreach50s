@@ -1,0 +1,68 @@
+﻿<Window x:Class="谁能坚持50秒.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:谁能坚持50秒"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Title="MainWindow" Width="800">
+
+    <Grid Width="800">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Canvas Name="canvas" Margin="25" Background="Gray" Grid.Column="0" Width="550" Height="550">
+            <!-- 以下为正方形长度的倍数 -->
+
+            <Rectangle x:Name="leftTop" Fill="#4876FF" Height="94" Width="94" Canvas.Left="47" Canvas.Top="61"/>
+            <!-- width*height = 0.17 * 0.17  left = top = 0.058 -->
+
+            <Rectangle x:Name="rightTop" Fill="#4876FF" Height="77"  Width="94" Canvas.Left="372" Canvas.Top="45"/>
+            <!-- width*height = 0.17 * 0.14  top = 0.029 right = 0.2 -->
+
+            <Button x:Name="center"  Height="61" Background="Red" Width="61" Canvas.Left="210" Canvas.Top="228"
+                    MouseLeftButtonDown="Center_MouseLeftButtonDown"
+                    MouseRightButtonDown="Center_MouseLeftButtonDown"
+                    MouseMove="Center_MouseMove"
+                    MouseLeftButtonUp="Center_MouseLeftButtonUp"
+                    MouseRightButtonUp="Center_MouseLeftButtonUp">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Rectangle Fill="#FFFF0000"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <!-- width*height = 0.111 * 0.111  left = top = 0.445 -->
+
+            <Rectangle x:Name="leftBottom" Fill="#4876FF" Height="94"  Width="47" Canvas.Left="47" Canvas.Top="321"/>
+            <!-- width*height = 0.087 * 0.17  left = 0.058 bottom = 0.058 -->
+
+            <Rectangle x:Name="rightBottom" Fill="#4876FF" Height="30"  Width="158" Canvas.Left="323" Canvas.Top="369"/>
+            <!-- width*height = 0.287 * 0.055  bottom = 0.142 right = 0 -->
+
+        </Canvas>
+
+        <StackPanel Margin="1.8,5,4.6,4.6" Background="White" Grid.Column="1">
+            <Label Content="Label"/>
+            <Label Content="Label"/>
+            <Label Content="Label"/>
+            <Label Content="Label"/>
+            <Button Content="Button" Margin="10"/>
+            <Button Content="Button" Margin="10"/>
+            <Button Content="Button" Margin="10"/>
+        </StackPanel>
+    </Grid>
+</Window>
