@@ -175,7 +175,7 @@ namespace 谁能坚持50秒
                     || Judgement(leftBottom)|| Judgement(rightBottom))
                     Thread.Sleep(1000);
 
-                Thread.Sleep(1);
+                Thread.Sleep(2);
             }
         }
 
