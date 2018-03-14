@@ -29,6 +29,7 @@ namespace 谁能坚持50秒
         {
             InitializeComponent();
             InitRectPosition();
+            
             tMoveRect = new Thread(MoveRectangle)
             {
                 IsBackground = true
@@ -36,7 +37,7 @@ namespace 谁能坚持50秒
             tMoveRect.Start();
             //length = (int)canvas.ActualHeight;
         }
-        readonly int length =550;
+        readonly double length =550;
         bool enableMove = false;
         double spanLeft = 0;
         double spanTop = 0;
@@ -56,8 +57,7 @@ namespace 谁能坚持50秒
                 {
                     center.SetValue(Canvas.LeftProperty, cLeft);
                 }
-               // Canvas.SetLeft(center, cLeft);
-               // Canvas.SetTop(center, cTop);
+
             }
         }
         //鼠标松开
@@ -72,39 +72,32 @@ namespace 谁能坚持50秒
         private void Center_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //创建鼠标捕获
+            double i = canvas.ActualWidth;
             Mouse.Capture(center);
             enableMove = true;
             spanLeft = e.GetPosition(canvas).X - Canvas.GetLeft(center);
             spanTop = e.GetPosition(canvas).Y - Canvas.GetTop(center);
         }
 
-        private  void  DelegatelGetPosition(ref int lTLeft , ref int lTRight ,
-            ref int lTTop , ref int lTBottom )
-        {
-            lTLeft = (int)leftTop.GetValue(Canvas.LeftProperty);
-            lTRight = (int)leftTop.GetValue(Canvas.RightProperty);
-            lTTop = (int)leftTop.GetValue(Canvas.TopProperty);
-            lTBottom = (int)leftTop.GetValue(Canvas.BottomProperty);
-        }
 
         private void MoveRectangle()
         {
-            int ltRow = 0, ltCol = 0, rtRow = 0, rtCol = 0, 
+            double ltRow = 0, ltCol = 0, rtRow = 0, rtCol = 0, 
                 lbRow = 0, lbCol = 0, rbRow = 0, rbCol = 0;
-            int ltAddRow = 1, ltAddCol = 1, rtAddRow = 1, rtAddCol = 1,
+            double ltAddRow = 1, ltAddCol = 1, rtAddRow = 1, rtAddCol = 1,
                 lbAddRow = 1, lbAddCol = 1, rbAddRow = 1, rbAddCol = 1;
            
             while (true)
             {
-                int ltLeft = (int)leftTop.Dispatcher.Invoke(new Func<double>(() => 
+                double ltLeft = leftTop.Dispatcher.Invoke(new Func<double>(() => 
                 (double)leftTop.GetValue(Canvas.LeftProperty)));
-                int ltTop = (int)leftTop.Dispatcher.Invoke(new Func<double>(() =>
+                double ltTop = leftTop.Dispatcher.Invoke(new Func<double>(() =>
                 (double)leftTop.GetValue(Canvas.TopProperty)));
-                if (ltLeft < 0 || ltLeft > length - 94)
+                if (ltLeft < 0.0 || ltLeft > length - 94.0)
                 {
                     ltAddRow = -ltAddRow;
                 }
-                if (ltTop < 0 || ltTop > length - 94)
+                if (ltTop < 0.0 || ltTop > length - 94.0)
                 {
                     ltAddCol = -ltAddCol;
                 }
@@ -117,15 +110,15 @@ namespace 谁能坚持50秒
                 }));
 
 
-                int rtLeft = (int)rightTop.Dispatcher.Invoke(new Func<double>(() =>
+                double rtLeft = rightTop.Dispatcher.Invoke(new Func<double>(() =>
                 (double)rightTop.GetValue(Canvas.LeftProperty)));
-                int rtTop = (int)rightTop.Dispatcher.Invoke(new Func<double>(() =>
+                double rtTop = rightTop.Dispatcher.Invoke(new Func<double>(() =>
                 (double)rightTop.GetValue(Canvas.TopProperty)));
-                if (rtLeft < 0 || rtLeft > length-94)
+                if (rtLeft < 0.0 || rtLeft > length-94.0)
                 {
                     rtAddRow = -rtAddRow;
                 }
-                if (rtTop <0 || rtTop > length -77)
+                if (rtTop <0.0 || rtTop > length -77.0)
                 {
                     rtAddCol = -rtAddCol;
                 }
@@ -138,15 +131,15 @@ namespace 谁能坚持50秒
                 }));
 
 
-                int lbLeft = (int)leftBottom.Dispatcher.Invoke(new Func<double>(() =>
+                double lbLeft = leftBottom.Dispatcher.Invoke(new Func<double>(() =>
                 (double)leftBottom.GetValue(Canvas.LeftProperty)));
-                int lbTop = (int)leftBottom.Dispatcher.Invoke(new Func<double>(() =>
+                double lbTop = leftBottom.Dispatcher.Invoke(new Func<double>(() =>
                 (double)leftBottom.GetValue(Canvas.TopProperty)));
-                if (lbLeft < 0 || lbLeft > length-47)
+                if (lbLeft < 0.0 || lbLeft > length-47.0)
                 {
                     lbAddRow = -lbAddRow;
                 }
-                if (lbTop < 0 || lbTop > length -94)
+                if (lbTop < 0.0 || lbTop > length -94.0)
                 {
                     lbAddCol = -lbAddCol;
                 }
@@ -158,15 +151,15 @@ namespace 谁能坚持50秒
                     leftBottom.SetValue(Canvas.LeftProperty, 0.058 * length + lbRow);
                 }));
 
-                int rbLeft = (int)rightBottom.Dispatcher.Invoke(new Func<double>(() =>
+                double rbLeft = rightBottom.Dispatcher.Invoke(new Func<double>(() =>
                 (double)rightBottom.GetValue(Canvas.LeftProperty)));
-                int rbTop = (int)leftTop.Dispatcher.Invoke(new Func<double>(() =>
+                double rbTop = leftTop.Dispatcher.Invoke(new Func<double>(() =>
                 (double)rightBottom.GetValue(Canvas.TopProperty)));
-                if (rbLeft < 0 || rbLeft > length - 158)
+                if (rbLeft < 0.0 || rbLeft > length - 158.0)
                 {
                     rbAddRow = -rbAddRow;
                 }
-                if (rbTop < 0|| rbTop > length - 30)
+                if (rbTop < 0.0|| rbTop > length - 30.0)
                 {
                     rbAddCol = -rbAddCol;
                 }
@@ -177,8 +170,44 @@ namespace 谁能坚持50秒
                     rightBottom.SetValue(Canvas.TopProperty, 0.803 * length - rbCol * 0.8);
                     rightBottom.SetValue(Canvas.LeftProperty, 0.713 * length + rbRow);
                 }));
+
+                if (Judgement(leftTop)|| Judgement(rightTop)
+                    || Judgement(leftBottom)|| Judgement(rightBottom))
+                    Thread.Sleep(1000);
+
                 Thread.Sleep(1);
             }
+        }
+
+
+        private bool Judgement(Rectangle rect)
+        {
+            double left = rect.Dispatcher.Invoke(new Func<double>(() =>
+                (double)rect.GetValue(Canvas.LeftProperty)));
+            double top = rect.Dispatcher.Invoke(new Func<double>(() =>
+            (double)rect.GetValue(Canvas.TopProperty)));
+            double right= rect.Dispatcher.Invoke(new Func<double>(() =>
+             rect.ActualWidth))+ left;
+            double bottom = rect.Dispatcher.Invoke(new Func<double>(() =>
+              rect.ActualHeight))+top;
+
+            double centerLeft = center.Dispatcher.Invoke(new Func<double>(() =>
+                (double)center.GetValue(Canvas.LeftProperty)));
+            double centerTop = center.Dispatcher.Invoke(new Func<double>(() =>
+                (double)center.GetValue(Canvas.TopProperty)));
+            double centerRight = center.Dispatcher.Invoke(new Func<double>(() =>
+                  center.ActualWidth)) + centerLeft;
+            double centerBottom = center.Dispatcher.Invoke(new Func<double>(() =>
+               center.ActualHeight)) + centerTop;
+
+            double minLeft = left > centerLeft ? left : centerLeft;
+            double minTop = top > centerTop ? top : centerTop;
+
+            double maxRight = right > centerRight ? centerRight : right;
+            double maxBottom = bottom > centerBottom ? centerBottom : bottom;
+
+            return ((minLeft < maxRight) && (minTop < maxBottom));
+
         }
 
         private void InitRectPosition()
