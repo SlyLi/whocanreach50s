@@ -23,8 +23,15 @@ namespace 谁能坚持50秒
     public partial class MainWindow : Window
     {
         Thread tMoveRect;
-        public delegate void delegate1(ref int lTLeft, ref int lTRight,
-            ref int lTTop, ref int lTBottom);
+
+
+        readonly double length = 550;
+        bool enableMove = false;
+        double spanLeft = 0;
+        double spanTop = 0;
+        private DispatcherTimer showTimer;
+        int i = 0;
+        private bool stop = true;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,12 +42,25 @@ namespace 谁能坚持50秒
                 IsBackground = true
             };
             tMoveRect.Start();
-            //length = (int)canvas.ActualHeight;
+
+
+            showTimer = new DispatcherTimer
+            {
+                Interval = new TimeSpan(10000000)  
+            };
+            showTimer.Tick += new EventHandler(ShowCurTimer);
+            showTimer.Start();
         }
-        readonly double length =550;
-        bool enableMove = false;
-        double spanLeft = 0;
-        double spanTop = 0;
+
+        public void ShowCurTimer(object sender, EventArgs e)
+        {
+            TimerTick();
+        }
+        private void TimerTick()
+        {
+            tbTimeText.Text = (++i).ToString();
+
+        }
         //鼠标移动
         private void Center_MouseMove(object sender, MouseEventArgs e)
         {
@@ -75,6 +95,7 @@ namespace 谁能坚持50秒
             double i = canvas.ActualWidth;
             Mouse.Capture(center);
             enableMove = true;
+            stop = false;
             spanLeft = e.GetPosition(canvas).X - Canvas.GetLeft(center);
             spanTop = e.GetPosition(canvas).Y - Canvas.GetTop(center);
         }
@@ -86,9 +107,11 @@ namespace 谁能坚持50秒
                 lbRow = 0, lbCol = 0, rbRow = 0, rbCol = 0;
             double ltAddRow = 1, ltAddCol = 1, rtAddRow = 1, rtAddCol = 1,
                 lbAddRow = 1, lbAddCol = 1, rbAddRow = 1, rbAddCol = 1;
-           
+
             while (true)
             {
+                while (Dispatcher.Invoke(new Func<bool>(() => stop))) ;
+
                 double ltLeft = leftTop.Dispatcher.Invoke(new Func<double>(() => 
                 (double)leftTop.GetValue(Canvas.LeftProperty)));
                 double ltTop = leftTop.Dispatcher.Invoke(new Func<double>(() =>
@@ -171,9 +194,12 @@ namespace 谁能坚持50秒
                     rightBottom.SetValue(Canvas.LeftProperty, 0.713 * length + rbRow);
                 }));
 
-                if (Judgement(leftTop)|| Judgement(rightTop)
-                    || Judgement(leftBottom)|| Judgement(rightBottom))
-                    Thread.Sleep(1000);
+                if (Judgement(leftTop) || Judgement(rightTop)
+                    || Judgement(leftBottom) || Judgement(rightBottom))
+                {
+                    MessageBox.Show("Game Over!");
+                    break;
+                }
 
                 Thread.Sleep(2);
             }
@@ -228,5 +254,42 @@ namespace 谁能坚持50秒
             rightBottom.SetValue(Canvas.LeftProperty, 0.713 * length);
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           if(choice.Content.Equals("暂停"))
+            {
+                stop = true;
+                this.choice.Content = "继续";
+            }
+            else
+            {
+                stop = false;
+                choice.Content = "暂停";
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if(tMoveRect.IsAlive)
+            {
+                tMoveRect.Abort();
+                Thread.Sleep(100);
+                tMoveRect = new Thread(MoveRectangle)
+                {
+                    IsBackground = true
+                };
+                tMoveRect.Start();
+            }
+            else
+            {
+                Thread.Sleep(100);
+                tMoveRect = new Thread(MoveRectangle)
+                {
+                    IsBackground = true
+                };
+                tMoveRect.Start();
+            }
+
+        }
     }
 }
