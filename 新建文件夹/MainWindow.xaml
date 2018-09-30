@@ -6,27 +6,15 @@
         xmlns:local="clr-namespace:谁能坚持50秒"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        
-      
-        
-     
-        Title="MainWindow"  Width="700" Height="550" >
-    <Window.Background>
-        <SolidColorBrush Opacity="0"></SolidColorBrush>
-    </Window.Background>
+        Title="MainWindow" Height="668" Width="800">
 
-
-    <Grid  Width="700" Height="550" >
+    <Grid Width="800">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Canvas Name="canvas"  Grid.Column="0" Width="550" Height="550" Margin="0,0,150,0" >
-            <Canvas.Background>
-                <SolidColorBrush Color="Gray" Opacity="0.2"></SolidColorBrush>
-                
-            </Canvas.Background>
+        <Canvas Name="canvas" Margin="25" Background="Gray" Grid.Column="0" Width="550" Height="550">
 
             <Rectangle x:Name="leftTop" Fill="#4876FF" Height="94" Width="94" Canvas.Left="22" Canvas.Top="45"/>
 
@@ -37,11 +25,11 @@
             <Rectangle x:Name="rightBottom" Fill="#4876FF" Height="30"  Width="158" Canvas.Left="392" Canvas.Top="370"/>
 
             <Button x:Name="center"  Height="61" Background="Red" Width="61" Canvas.Left="245" Canvas.Top="245"
-                    PreviewMouseLeftButtonDown="Center_MouseLeftButtonDown"
-                    PreviewMouseLeftButtonUp="Center_MouseLeftButtonUp"
-                    PreviewMouseMove="Center_MouseMove"
-                   
-                    >
+                    MouseLeftButtonDown="Center_MouseLeftButtonDown"
+                    MouseRightButtonDown="Center_MouseLeftButtonDown"
+                    MouseMove="Center_MouseMove"
+                    MouseLeftButtonUp="Center_MouseLeftButtonUp"
+                    MouseRightButtonUp="Center_MouseLeftButtonUp">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
@@ -60,17 +48,17 @@
             </Button>
         </Canvas>
 
-        <Canvas Background="White" Width="150" Margin="550,0,0,0">
+        <StackPanel Margin="5" Background="White" Grid.Column="1" Width="160">
 
             <TextBlock
-                x:Name="tbTimeText"
+                Name="tbTimeText"
                 TextWrapping="Wrap" FontSize="50" 
-                ><InlineUIContainer>
-                    <Label x:Name="timer" Content="0" Height="66" Width="146"/>
-                </InlineUIContainer></TextBlock>
+                >
+
+            </TextBlock>
 
             <TextBlock
-                TextWrapping="Wrap" FontSize="25" Canvas.Top="71" Width="150" 
+                TextWrapping="Wrap" FontSize="25" 
                 >
                 <LineBreak/> 
                 操作说明：<LineBreak/> 
@@ -81,9 +69,9 @@
 
 
 
-            <Button x:Name="choice" Content="暂停" Click="Stop_Click" Canvas.Left="23" Canvas.Top="452" Height="45" Width="106"/>
-            <Button Content="重新开始" Click="Restart_Click" Canvas.Left="23" Canvas.Top="376" Height="45" Width="106"/>
-            <Button Content="排行" Canvas.Left="23" Canvas.Top="298" Height="45" Width="106"/>
-        </Canvas>
+            <Button x:Name="choice" Content="暂停" Margin="10" Click="Stop_Click"/>
+            <Button Content="重新开始" Margin="10" Click="Restart_Click"/>
+            <Button Content="排行" Margin="10"/>
+        </StackPanel>
     </Grid>
 </Window>

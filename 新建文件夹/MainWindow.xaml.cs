@@ -25,25 +25,17 @@ namespace 谁能坚持50秒
     public partial class MainWindow : Window
     {
         MoveRect moving ;
-        Clock clock;
         readonly double length = 550;
         bool enableMove = false;
         bool enableBegin = true;
         double spanLeft = 0;
         double spanTop = 0;
-        double initX = 0;
-        double initY = 0;
         public MainWindow()
         {
-           
             InitializeComponent();
-            clock = new Clock(timer);
-            clock.Pause();
-            moving = new MoveRect( clock, length, center,
+            moving = new MoveRect(length, center,
                 new Rectangle[] { leftTop, rightTop, leftBottom, rightBottom });
-            moving.GameOver =false;
-           
-          
+            moving.GameOver = true;
         }
 
         public new void Closed(object sender, CancelEventArgs e)
@@ -54,29 +46,16 @@ namespace 谁能坚持50秒
         //鼠标移动
         private void Center_MouseMove(object sender, MouseEventArgs e)
         {
-            if (enableMove&&(!moving.GameOver))
+            if (enableMove)
             {
-                if (choice.Content.ToString() == "继续")
-                {
-                    moving.StopMove = true;
-                    clock.Pause();
-                    choice.Content = "暂停";
-                }
                 moving.StopMove = false;
-                var cLeft = e.GetPosition(canvas).X - spanLeft;
-                var cTop = e.GetPosition(canvas).Y - spanTop;
                 if(enableBegin)
                 {
-                    enableBegin = false;
-                    clock.Continue();
                     moving.GameBeign();
-                    initX = cLeft;
-                    initY = cTop;
-                    
+                    enableBegin = false;
                 }
-                if(!moving.GameOver)
-                    clock.Continue();
-                
+                var cLeft = e.GetPosition(canvas).X - spanLeft;
+                var cTop = e.GetPosition(canvas).Y - spanTop;
                 //设置矩形的位置
                 if(cTop>0&&cTop<length-72)
                 {
@@ -88,7 +67,6 @@ namespace 谁能坚持50秒
                 }
 
             }
-           
         }
         //鼠标松开
         private void Center_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -111,30 +89,12 @@ namespace 谁能坚持50秒
 
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
-            Button button = (Button)sender;
-            if(button.Content.ToString()=="暂停")
-            {
-                moving.StopMove = true;
-                clock.Pause();
-                button.Content = "继续";
-            }
-            else
-            {
-                if (!moving.GameOver)
-                    clock.Continue();
-                moving.StopMove = false;
-                button.Content = "暂停";
-            }
+            moving.StopMove = true;
         }
 
         private void Restart_Click(object sender, RoutedEventArgs e)
         {
             moving.Restart();
-            moving.StopMove = true;
-            clock.Restart();
-            timer.Content = 0;
-            center.SetValue(Canvas.TopProperty, initY);
-            center.SetValue(Canvas.LeftProperty, initX);
         }
 
     }
